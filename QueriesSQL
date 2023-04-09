@@ -31,3 +31,12 @@ SELECT department_id, sum(salary)
 FROM employee
 GROUP BY 1
 ORDER BY 2 DESC
+
+--6.	Вывести список департаментов с общим числом сотрудников, количеством сотрудников с заработной платой >= 50 000, долю ФОТ департамента в общем ФОТ компании.  
+SELECT 
+  department_id,
+  COUNT(*) AS total_employees,
+  SUM(CASE WHEN salary >= 50000 THEN 1 ELSE 0 END) AS employees_above_50000,
+  ROUND((SUM(salary) / (SELECT SUM(salary) FROM employee)) * 100, 2) AS fot_percentage
+FROM employee
+GROUP BY department_id;
